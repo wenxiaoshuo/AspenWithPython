@@ -11,6 +11,7 @@ repo_name: GitHub
 # --- 主题设置（核心装修） ---
 theme:
   name: material
+  custom_dir: overrides
   language: zh            # 语言设为中文
   
   # 启用原本隐藏的高级功能
