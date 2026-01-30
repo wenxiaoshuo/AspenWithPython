@@ -3378,8 +3378,8 @@
 <p><img alt="image.png" src="image.png" /></p>
 <h1 id="_1"><strong>第一部分 之前内容复习及其快速浏览</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p><strong>0-变量浏览器</strong></p>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+1.png" /></p>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+2.png" /></p>
+<p><img alt="image.png" src="image1.png" /></p>
+<p><img alt="image.png" src="image2.png" /></p>
 <p><strong>1-Aspen怎么启动:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">aspen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">win32</span><span class="p">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="c1">&#39;Apwn.Document&#39;)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="err">时间:13.560933828353882</span>
@@ -3406,11 +3406,11 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">aspen</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
 </code></pre></div>
 <p><strong>5.如何获取一个bkp的物质名字</strong></p>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+3.png" /></p>
+<p><img alt="image.png" src="image3.png" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">concent</span><span class="o">=</span><span class="n">Aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">FindNode</span><span class="p">(</span><span class="s2">&quot;\Data\Components\Specifications\Input\CASN&quot;</span><span class="p">)</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">Concent_all</span><span class="o">=</span><span class="err">[j.Name for j in concent.Elements]</span>
 </code></pre></div>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+4.png" /></p>
+<p><img alt="image.png" src="image4.png" /></p>
 <p>同理，如果是想获得CAS号就直接</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">concent</span><span class="o">=</span><span class="n">Aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">FindNode</span><span class="p">(</span><span class="s2">&quot;\Data\Components\Specifications\Input\CASN&quot;</span><span class="p">)</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">Concent_all</span><span class="o">=</span><span class="err">[j.Value for j in concent.Elements]</span>
@@ -3501,7 +3501,7 @@
 <a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">All</span><span class="o">=</span><span class="n">BlockName</span><span class="o">+</span><span class="s2">&quot;!&quot;</span><span class="o">+</span><span class="s2">&quot;RPlug&quot;</span>
 <a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">Aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Data&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Blocks&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">All</span><span class="p">)</span>
 </code></pre></div>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+5.png" /></p>
+<p><img alt="image.png" src="image5.png" /></p>
 <p>这是设备类型的选项，可以对这个进行查看</p>
 <p>删除模块:<code>Remove()</code></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">Aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Data&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Blocks&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s2">&quot;Blockname&quot;</span><span class="p">)</span>
@@ -3513,8 +3513,8 @@
 <a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="n">All</span><span class="o">=</span><span class="n">StreamName</span><span class="o">+</span><span class="s2">&quot;!&quot;</span><span class="o">+</span><span class="s2">&quot;MATERIAL&quot;</span>
 <a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="n">Aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Data&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Streams&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">All</span><span class="p">)</span>
 </code></pre></div>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+6.png" /></p>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+7.png" /></p>
+<p><img alt="image.png" src="image6.png" /></p>
+<p><img alt="image.png" src="image7.png" /></p>
 <p>删除流股:<code>Remove()</code></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">Aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Data&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Streams&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s2">&quot;StreamName&quot;</span><span class="p">)</span>
 </code></pre></div>
@@ -3522,11 +3522,11 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">Aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Data&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Blocks&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Ports&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="n">Portname</span><span class="p">).</span><span class="n">Elements</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Streamname</span><span class="p">)</span>
 <a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">port_Name</span><span class="o">=</span><span class="s2">&quot;D(OUT)&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;B(OUT)&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;F(IN)&quot;</span>
 </code></pre></div>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+8.png" /></p>
+<p><img alt="image.png" src="image8.png" /></p>
 <p>断开流股:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">Aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Data&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;blocks&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="n">Blockname</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="s2">&quot;Ports&quot;</span><span class="p">).</span><span class="n">Elements</span><span class="p">(</span><span class="n">Portname</span><span class="p">).</span><span class="n">Elements</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">Streamname</span><span class="p">)</span>
 </code></pre></div>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+9.png" /></p>
+<p><img alt="image.png" src="image9.png" /></p>
 <p>重要的点</p>
 <p><strong>大小写并不影响</strong></p>
 <h1 id="_3">第三部分:可能用到的方法及其保存方法<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
@@ -3589,16 +3589,16 @@ overwrite：当文件已存在时是否覆盖？True 或 False，默认值为 Tr
 <div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="n">Aspen</span><span class="p">.</span><span class="n">Export</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
 </code></pre></div>
 <p>各位可以加入这个交流群一起交流！</p>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+10.png" /></p>
+<p><img alt="image.png" src="image10.png" /></p>
 <p>一些比较好的化工链接:</p>
 <p>1.CEPD化工社区:</p>
 <p><a href="https://bbs.imbhj.com/">https://bbs.imbhj.com/</a></p>
 <p>2.我的公众号:MrsJone的破站(会分享关于Aspen和Python的一些文章)</p>
 <p>3.世示其up主的化工设计大赛管道选型,这个exe文件可以找up主三连获取</p>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+11.png" /></p>
+<p><img alt="image.png" src="image11.png" /></p>
 <p>4.能量衡算系统-可以用于化工设计大赛:</p>
 <p>进我那个群自领</p>
-<p><img alt="image.png" src="Python与Aspen联动的一些技巧总结/image+12.png" /></p>
+<p><img alt="image.png" src="image12.png" /></p>
 <p>5.AspenPy模块的github链接-我一开始用的Aspen和Python连接的库，可以给原作者star</p>
 <p><a href="https://github.com/YouMayCallMeJesus/AspenPlus-Python-Interface">https://github.com/YouMayCallMeJesus/AspenPlus-Python-Interface</a></p>
 
