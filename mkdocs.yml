@@ -1,0 +1,58 @@
+# --- 网站基本信息 ---
+site_name: MrsJone的 Aspen 学习笔记
+site_description: 记录 Aspen Plus 与Python联动的学习历程
+site_author: MrsJone
+
+# --- 仓库链接（会在右上角显示 GitHub 图标） ---
+# 把下面这行换成你自己的 GitHub 仓库地址
+repo_url: https://github.com/wenxiaoshuo
+repo_name: GitHub
+
+# --- 主题设置（核心装修） ---
+theme:
+  name: material
+  language: zh            # 语言设为中文
+  
+  # 启用原本隐藏的高级功能
+  features:
+    - navigation.tabs     # 顶部导航栏（类似浏览器的标签页）
+    - navigation.top      # 返回顶部按钮（右下角那个箭头）
+    - search.suggest      # 搜索时会有智能提示
+    - search.highlight    # 搜索结果高亮显示
+    - content.code.copy   # 代码块右上角的一键复制按钮
+  
+  # --- 颜色与黑夜模式 (点击右上角图标切换) ---
+  palette: 
+    # 默认：亮色模式
+    - scheme: default
+      primary: indigo     # 顶部栏颜色：靛青
+      accent: blue        # 链接颜色：蓝
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色模式
+    # 切换后：深色模式
+    - scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色模式
+
+# --- Markdown 扩展功能（让你的笔记支持更多花样） ---
+markdown_extensions:
+  - admonition            # 支持漂亮的提示框（!!! note "笔记"）
+  - pymdownx.details      # 支持折叠内容
+  - pymdownx.superfences  # 支持复杂的代码块嵌套
+  - pymdownx.highlight:   # 代码高亮设置
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true     # 给每个标题后面加个 ¶ 符号，方便分享链接
+
+# --- 导航栏设置 (可选，不写这块它会自动根据文件夹生成) ---
+# 只有当你想要自定义顺序时才需要写这块
+# nav:
+#   - 首页: index.md
+#   - Aspen基础: 
+#       - 界面
