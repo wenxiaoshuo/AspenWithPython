@@ -3664,7 +3664,7 @@ s.t.\begin{cases}200\leq T\leq400\ 1 \leq L \leq 2 \ \frac{L}{d}\leq 3 \ 100\leq
 <p>好了，现在有个问题,我们现在不能盲目的让DMS产量最高，温度和压力，甲醇浓度也有成本，所以我们要保证DMS的前提下使得温度，压力和甲醇的量最低,所以我们需要用多目标规划，这里我们使用权重</p>
 <p>$\text{评分} = (\text{DMS产量} \times \text{奖励权重})\ - (\text{温度} \times \text{惩罚权重})\ - (\text{压力} \times \text{惩罚权重}) - (\text{甲醇} \times \text{惩罚权重})$</p>
 <p>这里我们使得奖励权重为5000,温度惩戒权重为100，压力惩戒为1,原料惩戒为100</p>
-<p><img alt="image.png" src="使用遗传算法与python对反应器优化/image 7.png" /></p>
+<p><img alt="image.png" src="image7.png" /></p>
 <p>这是代码</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># ===================== 模块1：基础配置 =====================</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span> <span class="nn">time</span>
