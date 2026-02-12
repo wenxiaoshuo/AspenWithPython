@@ -297,7 +297,7 @@ $\text{评分} = (\text{DMS产量} \times \text{奖励权重})\\ - (\text{温度
 
 这里我们使得奖励权重为5000,温度惩戒权重为100，压力惩戒为1,原料惩戒为100
 
-![image.png](使用遗传算法与python对反应器优化/image 7.png)
+![image.png](使用遗传算法与python对反应器优化/image7.png)
 
 这是代码
 
