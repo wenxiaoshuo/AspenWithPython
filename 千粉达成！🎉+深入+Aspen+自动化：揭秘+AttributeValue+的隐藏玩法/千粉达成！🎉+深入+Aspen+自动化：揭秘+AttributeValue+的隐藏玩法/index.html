@@ -1,0 +1,923 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录 Aspen Plus 与Python联动的学习历程">
+      
+      
+        <meta name="author" content="MrsJone">
+      
+      
+      
+        <link rel="prev" href="../../%E4%BD%BF%E7%94%A8%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E4%B8%8Epython%E5%AF%B9%E5%8F%8D%E5%BA%94%E5%99%A8%E4%BC%98%E5%8C%96/">
+      
+      
+        <link rel="next" href="../../%E5%8C%96%E5%B7%A5%E4%BB%BF%E7%9C%9F_%2B%E5%88%A9%E7%94%A8%2BPython%2B%2B%2B%E6%B7%B1%E5%BA%A6/%E5%8C%96%E5%B7%A5%E4%BB%BF%E7%9C%9F_%2B%E5%88%A9%E7%94%A8%2BPython%2B%2B%2B%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%90%9E%E5%AE%9AAspen%2B%E6%B5%AE%E9%98%80%E5%A1%94%E6%9D%BF%E8%87%AA%E5%8A%A8%E6%A0%A1%E6%A0%B8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>自动化误诊 - MrsJone的 Aspen 学习笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="MrsJone的 Aspen 学习笔记" class="md-header__button md-logo" aria-label="MrsJone的 Aspen 学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MrsJone的 Aspen 学习笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              自动化误诊
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wenxiaoshuo" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="md-tabs__link">
+          
+  
+  
+  学习笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Aspen%2BGuide/" class="md-tabs__link">
+          
+  
+  
+  更多资源
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MrsJone的 Aspen 学习笔记" class="md-nav__button md-logo" aria-label="MrsJone的 Aspen 学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MrsJone的 Aspen 学习笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wenxiaoshuo" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    学习笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python联动技巧
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BD%BF%E7%94%A8%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E4%B8%8Epython%E5%AF%B9%E5%8F%8D%E5%BA%94%E5%99%A8%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    遗传算法优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自动化误诊
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8C%96%E5%B7%A5%E4%BB%BF%E7%9C%9F_%2B%E5%88%A9%E7%94%A8%2BPython%2B%2B%2B%E6%B7%B1%E5%BA%A6/%E5%8C%96%E5%B7%A5%E4%BB%BF%E7%9C%9F_%2B%E5%88%A9%E7%94%A8%2BPython%2B%2B%2B%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%90%9E%E5%AE%9AAspen%2B%E6%B5%AE%E9%98%80%E5%A1%94%E6%9D%BF%E8%87%AA%E5%8A%A8%E6%A0%A1%E6%A0%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python+深度学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BPlus%2BPython%2B%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90%EF%BC%9A%E7%89%A9%E6%80%A7%E9%85%8D%E7%BD%AE%E4%B8%8E%2BCOM%2B%E6%8E%A5%E5%8F%A3%E6%9C%BA%E5%88%B6%E5%8B%98%E8%AF%AF/Aspen%2BPlus%2BPython%2B%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90%EF%BC%9A%E7%89%A9%E6%80%A7%E9%85%8D%E7%BD%AE%E4%B8%8E%2BCOM%2B%E6%8E%A5%E5%8F%A3%E6%9C%BA%E5%88%B6%E5%8B%98%E8%AF%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    更多资源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    更多资源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<p><img alt="image.png" src="../image.png" /></p>
+<p>各位好，这里是 <strong>MrsJone</strong>！</p>
+<p>今天对我来说是一个特别的日子——<strong>公众号粉丝突破 1000 人啦！</strong> 🎉</p>
+<p>首先，特别感谢各位对 MrsJone 的点赞和关注，也感谢评论区朋友们的赞赏与支持。你们的每一个关注，都是我持续更新、更加努力的动力！</p>
+<p><img alt="Screenshot_20260209_024058_com_tencent_mp_MainAct.jpg" src="../Screenshot_20260209_024058_com_tencent_mp_MainAct.jpg" /></p>
+<p>先把咱们的交流大本营放出来，欢迎志同道合的朋友加入 <strong>QQ群：562721026</strong>。</p>
+<p>好了，寒暄过后，咱们进入正题。今天主要通过 Python 自动化，来聊一聊 Aspen 中一个非常重要但常被忽视的概念——<strong>AttributeValue</strong>。</p>
+<p>一.问题导入：除了“数值”，我们还能获取什么？</p>
+<p>当我们使用 Python 连接 Aspen 时，最常见的操作就是抓取某个变量的数据。 例如，我们想获取模块 <code>B1</code> 中塔板 1 的温度（如下图所示）：</p>
+<p><img alt="image.png" src="../image%201.png" /></p>
+<div class="highlight"><pre><span></span><code>图1 这里我们展示模块B1的塔板1温度
+</code></pre></div>
+<p>通常，我们会使用以下代码来获取它的<strong>值</strong>：</p>
+<p><code>TEM=Application.Tree.FindNode("\Data\Blocks\B1\Output\B_TEMP").Value</code></p>
+<p><strong>问题来了：</strong> 如果我们想获取这个变量的<strong>度量单位</strong>（如 C 或 K）、<strong>物理量类型</strong>（如 Temperature）、或者它的<strong>输入输出状态</strong>，该怎么办呢？</p>
+<p><img alt="image.png" src="../image%202.png" /></p>
+<p>这个时候就必须提到AttributeValue了</p>
+<p>二.什么是AttributeValue？</p>
+<p>在 Aspen 的官方定义中（当然，也可以看作是我教程里的定义）：</p>
+<p>你可以通过 <code>AttributeValue</code> 和 <code>AttributeType</code> 属性获取节点的<strong>附加信息</strong>（称为 attributes）。这两个属性都需要传入一个属性编号参数，该编号是 <code>HAPAttributeNumber</code> 枚举类中的枚举值。</p>
+<p><img alt="image.png" src="../image%203.png" /></p>
+<p>简单来说，如果 <code>Value</code> 是一个人的“名字”，那么 <code>AttributeValue</code> 就像是查看这个人的“身份证”，能看到性别、籍贯等更多信息。</p>
+<p><img alt="image.png" src="../image%204.png" /></p>
+<p>Aspen 内部为每一个属性都分配了一个整数 ID。例如，最基础的“数值”属性，在枚举中对应的名字是 <code>HAPVALUE</code>，对应的 ID 是 <code>0</code>。</p>
+<p>为什么HAP_VALUE=0呢，我们在变量浏览器中拖动变量名，也能验证这一点：</p>
+<p><img alt="image.png" src="../image%205.png" /></p>
+<p>我们就能看到值HAP_VALUE表示0</p>
+<p>这意味着，Aspen 内部有成百上千个这样的 ID。那么，如何知道 <code>HAP_UNIT</code> 或其他属性对应的 ID 是多少呢？我们需要破解 <code>happ.tlb</code> 文件。</p>
+<p>三.如何破解happ.ltb</p>
+<p>为了获取所有的属性 ID 对照表，我们可以利用 Python 的 <code>win32com</code> 库来解析 Aspen 的类型库文件（Type Library）。</p>
+<p>```Plain Text
+import win32com.client as win32
+import pythoncom</p>
+<h1 id="1">1. 装载类型库<a class="headerlink" href="#1" title="Permanent link">&para;</a></h1>
+<p>tlb = pythoncom.LoadTypeLib(r'D:\aspenruanjian\AprSystem V14.0\GUI\Xeq\happ.tlb')</p>
+<h1 id="aspen">这个路径表示的是你下载Aspen的时候的地址<a class="headerlink" href="#aspen" title="Permanent link">&para;</a></h1>
+<h1 id="2-hapattributenumber">2. 找到 HAPAttributeNumber 枚举<a class="headerlink" href="#2-hapattributenumber" title="Permanent link">&para;</a></h1>
+<p>for i in range(tlb.GetTypeInfoCount()):
+    ti = tlb.GetTypeInfo(i)
+    name, <em>_ = tlb.GetDocumentation(i)   # 用 </em>_ 吃掉剩余 3 个返回值
+    if name == 'HAPAttributeNumber':
+        break</p>
+<h1 id="3">3. 枚举每个成员<a class="headerlink" href="#3" title="Permanent link">&para;</a></h1>
+<p>ta = ti.GetTypeAttr()
+for j in range(ta.cVars):
+    vd = ti.GetVarDesc(j)
+    mem_name, *_ = ti.GetDocumentation(vd.memid)
+    value = vd.value
+    print(f"{mem_name:&lt;25} = {value}")
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>运行这段代码，你会得到一个长长的列表。我已经整理了部分常用的放在我的网站上（[https://wenxiaoshuo.github.io/AspenWithPython/](https://wenxiaoshuo.github.io/AspenWithPython/)），这里列举一部分：
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>```Plain Text
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>HAP_VALUE                 = 0
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>HAP_RESERVED1             = 1
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>HAP_UNITROW               = 2
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>HAP_UNITCOL               = 3
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>HAP_RESERVED2             = 4
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>HAP_OPTIONLIST            = 5
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>HAP_RECORDTYPE            = 6
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>HAP_ENTERABLE             = 7
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>HAP_UPPERLIMIT            = 8
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>HAP_LOWERLIMIT            = 9
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>HAP_VALUEDEFAULT          = 10
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>HAP_USERENTERED           = 11
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>HAP_COMPSTATUS            = 12
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>HAP_BASIS                 = 13
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>HAP_INOUT                 = 14
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>HAP_PORTSEX               = 15
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>HAP_MULTIPORT             = 16
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>HAP_PORTTYPE              = 17
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>HAP_OUTVAR                = 18
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>HAP_PROMPT                = 19
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>HAP_PRETENDNOTENTERED     = 20
+</code></pre></div></p>
+<p>四.AttributeValue 的使用方法</p>
+<h4 id="1_1">1. 获取数值 (基础)<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
+<p>虽然我们可以直接用 <code>.Value</code>，但用 <code>AttributeValue</code> 也可以实现同样的效果：</p>
+<p>```Plain Text
+HAP_VALUE=0
+c=aspen.Tree.FindNode(r"\Data\Blocks\B1\Output\B_TEMP\1").AttributeValue(HAP_VALUE)
+print(c)</p>
+<h1 id="hap_value0">前面说了HAP_VALUE=0<a class="headerlink" href="#hap_value0" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>#### 2. 获取物理量/单位类型
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>回到开头的问题，怎么知道这个变量是表示“温度”还是“压力”？我们需要 `HAPUNITROW` (ID=2)。
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>![image.png](image 6.png)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>我们从这里得到，HAP_UNITROW来表示物理量，为2
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>```Plain Text
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>HAP_UNITROW=2
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>c=aspen.Tree.FindNode(r&quot;\Data\Blocks\B1\Output\B_TEMP\1&quot;).AttributeValue(HAP_UNITROW)
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>print(c)
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>#22
+</code></pre></div>
+<p>同时根据这个，我们可以看选项列表和提示列表</p>
+<p>3.获取选型列表和提示列表</p>
+<p>（1）.看HAP_**</p>
+<p><img alt="image.png" src="../image%207.png" /></p>
+<p>（2）.因为这个是列表，所以我们需要用以下方式获取</p>
+<p>```Plain Text
+h=aspen.Tree.FindNode("\Data\Blocks\B1\Input\ALGORITHM").AttributeValue(5).Elements
+for i in h:
+    print(i)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>（3）.提示列表
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>![image.png](image 8.png)
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>```Plain Text
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>h=aspen.Tree.FindNode(&quot;\Data\Blocks\B1\Input\ALGORITHM&quot;)
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>h.AttributeValue(19)
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>#&#39;收敛方法。除非收敛 = 自定义(&quot;规定 | 设置 | 配置&quot;页)，否则不能修改。&#39;
+</code></pre></div></p>
+<p>五.进阶：如何修改属性 (SetAttributeValue)</p>
+<p>在 Python 中使用 <code>help(node)</code> 往往查不到详细文档，但在 COM 接口层面，它的定义如下：</p>
+<blockquote>
+<p><strong>SetAttributeValue(attrnumber, force, arg2)</strong></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>- **attrnumber**: 属性编号（查阅上面的 HAP 枚举表）。
+
+- **force**: 强制标志。`0` 或 `False` 为正常修改；`1` 或 `True` 表示强制覆盖（即使被锁定）。
+
+- **arg2**: **你要写入的新值**。
+</code></pre></div>
+<p><img alt="image.png" src="../image%209.png" /></p>
+<blockquote>
+<p><strong>注意</strong>：这个方法通常用于修改那些无法通过简单的 <code>SetValue</code> 直接操作的底层属性。</p>
+</blockquote>
+<p>2.实操案例</p>
+<p>假设我们要修改某个模块的计算基准 <code>B:F_BASIS</code>，我们可以这样做：</p>
+<p><img alt="image.png" src="../image%2010.png" /></p>
+<p>我们可以通过SetAttributeValue进行修改</p>
+<p>```Plain Text
+node3=aspen.Tree.FindNode("\Data\Blocks\B1\Input\B:F_BASIS")
+node3.SetAttributeValue(0,False,"MASS")</p>
+<h1 id="0hap_">第一个0表示HAP_**,第二个表示非强制修改,第三个表示值<a class="headerlink" href="#0hap_" title="Permanent link">&para;</a></h1>
+<p>```</p>
+<p><img alt="image.png" src="../image%2011.png" /></p>
+<p>代码执行后，你会发现 Aspen 中的设置已经成功变为 "MASS"。同理，这种方法极其强大，甚至可以用来修改变量的度量单位。</p>
+<p>六.总结</p>
+<p>今天我们深入探讨了 Aspen 自动化中两个看似冷门但功能强大的方法：</p>
+<ol>
+<li>
+<p><strong>AttributeValue</strong>: 用于获取变量的“元数据”（如单位、选项、提示）。</p>
+</li>
+<li>
+<p><strong>SetAttributeValue</strong>: 用于更底层地修改变量属性。</p>
+</li>
+</ol>
+<p>七.悄悄话</p>
+<p>最后，想和大家聊几句心里话。</p>
+<p>我是来自沧州交通学院制药工程专业的一名学生。从大一到大三，我一直在默默运营这个公众号。在很长一段时间里，粉丝数从 0 慢慢涨到了 134 人。</p>
+<p>但就在最近这短短十天里，粉丝数突然暴涨了 1000 人！这让我既惊讶又感动。</p>
+<p>承蒙错爱，不胜感激。</p>
+<p>我一直把这里当作一个记录学习历程的个人博客，分享我在探索 Aspen 和 Python 过程中的点滴。能得到这么多朋友的认可，真的非常开心。</p>
+<p>未来的日子里，我会继续分享更多高质量的干货。如果你觉得这篇文章对你有帮助，欢迎<strong>点赞</strong> + <strong>在看</strong>！</p>
+<p>谢谢各位！</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+
+  Made with 
+  <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+    Material for MkDocs
+  </a>
+
+  <br>
+  
+  <span id="busuanzi_container_site_pv" style="display:none">
+      👀 本站总访问量 
+      <span id="busuanzi_value_site_pv" style="font-weight: bold;"></span> 次
+  </span>
+  
+  <span id="busuanzi_container_site_uv" style="display:none">
+      | 🙋‍♂️ 总访客数 
+      <span id="busuanzi_value_site_uv" style="font-weight: bold;"></span> 人
+  </span>
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1226 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录 Aspen Plus 与Python联动的学习历程">
+      
+      
+        <meta name="author" content="MrsJone">
+      
+      
+      
+        <link rel="prev" href="../../%E5%8D%83%E7%B2%89%E8%BE%BE%E6%88%90%EF%BC%81%F0%9F%8E%89%2B%E6%B7%B1%E5%85%A5%2BAspen%2B%E8%87%AA%E5%8A%A8%E5%8C%96%EF%BC%9A%E6%8F%AD%E7%A7%98%2BAttributeValue%2B%E7%9A%84%E9%9A%90%E8%97%8F%E7%8E%A9%E6%B3%95/%E5%8D%83%E7%B2%89%E8%BE%BE%E6%88%90%EF%BC%81%F0%9F%8E%89%2B%E6%B7%B1%E5%85%A5%2BAspen%2B%E8%87%AA%E5%8A%A8%E5%8C%96%EF%BC%9A%E6%8F%AD%E7%A7%98%2BAttributeValue%2B%E7%9A%84%E9%9A%90%E8%97%8F%E7%8E%A9%E6%B3%95/">
+      
+      
+        <link rel="next" href="../../Aspen%2BPlus%2BPython%2B%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90%EF%BC%9A%E7%89%A9%E6%80%A7%E9%85%8D%E7%BD%AE%E4%B8%8E%2BCOM%2B%E6%8E%A5%E5%8F%A3%E6%9C%BA%E5%88%B6%E5%8B%98%E8%AF%AF/Aspen%2BPlus%2BPython%2B%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90%EF%BC%9A%E7%89%A9%E6%80%A7%E9%85%8D%E7%BD%AE%E4%B8%8E%2BCOM%2B%E6%8E%A5%E5%8F%A3%E6%9C%BA%E5%88%B6%E5%8B%98%E8%AF%AF/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Python+深度学习 - MrsJone的 Aspen 学习笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#02-aspen-python" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="MrsJone的 Aspen 学习笔记" class="md-header__button md-logo" aria-label="MrsJone的 Aspen 学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MrsJone的 Aspen 学习笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Python+深度学习
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wenxiaoshuo" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="md-tabs__link">
+          
+  
+  
+  学习笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Aspen%2BGuide/" class="md-tabs__link">
+          
+  
+  
+  更多资源
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MrsJone的 Aspen 学习笔记" class="md-nav__button md-logo" aria-label="MrsJone的 Aspen 学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MrsJone的 Aspen 学习笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wenxiaoshuo" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    学习笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python联动技巧
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BD%BF%E7%94%A8%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E4%B8%8Epython%E5%AF%B9%E5%8F%8D%E5%BA%94%E5%99%A8%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    遗传算法优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8D%83%E7%B2%89%E8%BE%BE%E6%88%90%EF%BC%81%F0%9F%8E%89%2B%E6%B7%B1%E5%85%A5%2BAspen%2B%E8%87%AA%E5%8A%A8%E5%8C%96%EF%BC%9A%E6%8F%AD%E7%A7%98%2BAttributeValue%2B%E7%9A%84%E9%9A%90%E8%97%8F%E7%8E%A9%E6%B3%95/%E5%8D%83%E7%B2%89%E8%BE%BE%E6%88%90%EF%BC%81%F0%9F%8E%89%2B%E6%B7%B1%E5%85%A5%2BAspen%2B%E8%87%AA%E5%8A%A8%E5%8C%96%EF%BC%9A%E6%8F%AD%E7%A7%98%2BAttributeValue%2B%E7%9A%84%E9%9A%90%E8%97%8F%E7%8E%A9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自动化误诊
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python+深度学习
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python+深度学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#02-aspen-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 技术路线：把 Aspen 变成 Python 的“子程序”
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aspen-v14-400" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化 Aspen V14 (对应版本号 40.0，具体视安装版本而定)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自动寻找全塔负荷最高的“瓶颈板”
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyd_rhol-hyd_mul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        抓取液相密度 (HYD_RHOL) 和 粘度 (HYD_MUL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="抓取液相密度 (HYD_RHOL) 和 粘度 (HYD_MUL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-figure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 负荷性能图 (The Figure)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 落地验证：五条红线定生死
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="05 落地验证：五条红线定生死">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-the-excel-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 诊断日志表 (The Excel Table)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 总结与展望
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BPlus%2BPython%2B%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90%EF%BC%9A%E7%89%A9%E6%80%A7%E9%85%8D%E7%BD%AE%E4%B8%8E%2BCOM%2B%E6%8E%A5%E5%8F%A3%E6%9C%BA%E5%88%B6%E5%8B%98%E8%AF%AF/Aspen%2BPlus%2BPython%2B%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90%EF%BC%9A%E7%89%A9%E6%80%A7%E9%85%8D%E7%BD%AE%E4%B8%8E%2BCOM%2B%E6%8E%A5%E5%8F%A3%E6%9C%BA%E5%88%B6%E5%8B%98%E8%AF%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    更多资源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    更多资源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#02-aspen-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 技术路线：把 Aspen 变成 Python 的“子程序”
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aspen-v14-400" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化 Aspen V14 (对应版本号 40.0，具体视安装版本而定)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自动寻找全塔负荷最高的“瓶颈板”
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyd_rhol-hyd_mul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        抓取液相密度 (HYD_RHOL) 和 粘度 (HYD_MUL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="抓取液相密度 (HYD_RHOL) 和 粘度 (HYD_MUL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-figure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 负荷性能图 (The Figure)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 落地验证：五条红线定生死
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="05 落地验证：五条红线定生死">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-the-excel-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 诊断日志表 (The Excel Table)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 总结与展望
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<p><strong>摘要：</strong> 手工算塔板就像在电子厂拧螺丝。为了探索效率的极限，我们的群友<strong>帮倒忙</strong>尝试用 Python (COM) 控制 Aspen，并训练了一个简单的 PyTorch 神经网络来拟合经验图表。这是一个 V0.1 版本的自动化校核原型，分享给大家</p>
+<p>文件到时候会放在群链接，大家可以进我的QQ群获取:</p>
+<p>Python与Aspen交流群:562721026</p>
+<p><img alt="image.png" src="../image.png" /></p>
+<p>01 写在前面：一个“想偷懒”的念头</p>
+<p>做化工设计的兄弟们都有过这种“至暗时刻”：</p>
+<p>Aspen 模拟好不容易收敛了，以为能下班了，结果到了<strong>水力学校核（Hydraulic Rating）</strong>环节，还是得切回手动模式。</p>
+<p>我们要对着那张祖传的《泛点负荷相关图》（或者史密斯图），眯着眼睛估读：“这大概是 0.12 还是 0.125？” 读完数据，再手算雾沫夹带、液泛因子。算完发现 <strong>Flood &gt; 85%</strong>，红了。怎么办？改塔径，改板间距，<strong>然后上述步骤全部重来一遍</strong>。</p>
+<p><strong>作为一名如果不写代码就手痒的大三学生，我一直在想：能不能把这个流程自动化？</strong></p>
+<p>经过一个周末的折腾，我搭建了一个<strong>基于 Python + 深度学习的初版脚本</strong>。它目前还只是一个<strong>原型（Prototype）</strong>，肯定有不少 Bug，但它跑通了一个很有意思的逻辑闭环。</p>
+<p>这个思路大致是这样的</p>
+<p>1.运行程序，读取塔径等数据</p>
+<p>2.选择单溢流还是双溢流</p>
+<p>3.进行塔板结构几何结构生成（这个使用的是穷举法）</p>
+<p>4.从Aspen获取具体的关键数据-粘度，表面张力等（这个需要提前输入）</p>
+<p>5.用神经网络得到这几条线的拟合曲线和直线.</p>
+<p>6.进行水力学核算</p>
+<p>7.进行操作弹性分析</p>
+<p>8.得到核算表格和图</p>
+<p>今天发出来，权当抛砖引玉，供大家来看一番。</p>
+<h3 id="02-aspen-python">02 技术路线：把 Aspen 变成 Python 的“子程序”<a class="headerlink" href="#02-aspen-python" title="Permanent link">&para;</a></h3>
+<p>传统的 Excel VBA 虽然能用，但扩展性有限。于是选择了 Python 的 <code>win32com</code> 库，通过 Windows 的 COM 接口，直接“接管” Aspen。</p>
+<p><strong>原理拆解：</strong> 利用 <code>win32com.client.Dispatch</code> 实例化 Aspen 文档对象。这相当于在后台开了一个“隐形”的 Aspen，可以直接读写其内存中的 <strong>Variable Tree（变量树）</strong>。</p>
+<p><strong>代码实操：</strong> 比起手动导出数据，这种“实时抓取”的方式显然更优雅：</p>
+<p>```Plain Text</p>
+<h1 id="aspen-v14-400">初始化 Aspen V14 (对应版本号 40.0，具体视安装版本而定)<a class="headerlink" href="#aspen-v14-400" title="Permanent link">&para;</a></h1>
+<p>aspen = win32.Dispatch('Apwn.Document.40.0')
+aspen.InitFromArchive2(bkp_path)</p>
+<h1 id="_1">自动寻找全塔负荷最高的“瓶颈板”<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="hyd_rhol-hyd_mul">抓取液相密度 (HYD_RHOL) 和 粘度 (HYD_MUL)<a class="headerlink" href="#hyd_rhol-hyd_mul" title="Permanent link">&para;</a></h1>
+<p>rou_L = aspen.Tree.FindNode(f"/Data/Blocks/{block}/Output/HYD_RHOL/{stage}").Value
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>这就好比给 Aspen 装了个 API，虽然有时候连接不太稳定（老用户都懂 COM 接口的脾气），但只要连上了，数据提取就是毫秒级的事。
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>03 尝试：用神经网络“拟合”经验图表
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>这是本项目最“过度设计”（Overkill）但也最有趣的地方。
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>**痛点：**
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>浮阀塔设计的核心参数——**泛点负荷因数**  和 **充气系数** ，本质上是多变量非线性函数。
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>![image.png](image 1.png)
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>传统的做法是线性插值，或者用复杂的多项式拟合。
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>**群友的解法：** 既然是非线性映射，为什么不试试**神经网络**？ 群友尝试训练了一个轻量级的 **PyTorch 全连接网络 (MLP)**。不追求数学解析式，而是让神经网络去“学习”标准图表上的数据点分布。
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>**学术细节：**
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>- **模型架构**：2个输入层，第一层隐藏层32个神经元，激活判断，第二层隐藏层16个神经元，激活判断，第三层隐藏层16个神经元，激活判断，第四层隐藏层16个神经元，激活判断，输出层。
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>- **推理过程(应该是四层隐藏图，这里是一个实例)**：
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>![image.png](image 2.png)
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>```Plain Text
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a># 一个非常简单的全连接网络结构
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>class SimpleModel(nn.Module):
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    def __init__(self):
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        super().__init__()
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        self.net = nn.Sequential(
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>            nn.Linear(2, 32), nn.ReLU(), # 引入非线性激活
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>            nn.Linear(32, 16), nn.ReLU(),
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>            nn.Linear(16, 1)
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        )
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a># 加载训练好的模型权重 (.pth)
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a># 这一步代替了“人眼查图”
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>c_f = model(input_tensor).item()
+</code></pre></div></p>
+<p>当然，神经网络的准确性完全取决于训练数据的质量。目前的模型在标准工况下表现尚可，但在极端边界条件下（比如极小板间距或极端物性），<strong>AI 可能会一本正经地胡说八道</strong>。所以，它目前只能作为辅助参考，不能完全替代工程师的判断。</p>
+<p>04 成果输出:输出Excel表格和图像</p>
+<p>我用 <code>Matplotlib</code> 和 <code>OpenPyxl</code> 做了两套可视化输出，这也是这个脚本目前最实用的部分。</p>
+<h4 id="1-the-figure">1. 负荷性能图 (The Figure)<a class="headerlink" href="#1-the-figure" title="Permanent link">&para;</a></h4>
+<p>这是工程师最关心的“那张图”。脚本内置了国标水力学公式，尝试自动画出那五条“红线”：</p>
+<ul>
+<li>
+<p><strong>过量雾沫夹带线 (Jet Flood)</strong></p>
+</li>
+<li>
+<p><strong>淹塔线 (Downcomer Flood)</strong></p>
+</li>
+<li>
+<p><strong>过量泄漏线 (Weeping)</strong></p>
+</li>
+<li>
+<p><strong>降液管超负荷线 (Downcomer Choke)</strong></p>
+</li>
+<li>
+<p><strong>液相负荷下限线</strong></p>
+</li>
+</ul>
+<p><img alt="image.png" src="../image%203.png" /></p>
+<p>程序会自动把<strong>当前操作点（Operating Point）</strong>用一个红色星号标在图上。</p>
+<ul>
+<li>
+<p><strong>星号在圈里</strong>：恭喜，设计大概率是稳的。</p>
+</li>
+<li>
+<p><strong>星号在圈外</strong>：程序会冷酷地告诉你——“位于过量雾沫夹带线之上”，这时候你就得回去改塔径了。</p>
+</li>
+</ul>
+<h3 id="05">05 落地验证：五条红线定生死<a class="headerlink" href="#05" title="Permanent link">&para;</a></h3>
+<p>拿到了数据和系数，剩下的就是纯粹的流体力学计算。脚本内置了国标公式，尝试自动画出那五条“红线”：</p>
+<ol>
+<li>
+<p><strong>过量雾沫夹带线 (Jet Flood)</strong></p>
+</li>
+<li>
+<p><strong>淹塔线 (Downcomer Flood)</strong></p>
+</li>
+<li>
+<p><strong>过量泄漏线 (Weeping)</strong></p>
+</li>
+<li>
+<p><strong>降液管超负荷线 (Downcomer Choke)</strong></p>
+</li>
+<li>
+<p><strong>液相负荷下限线</strong></p>
+</li>
+</ol>
+<p><strong>可视化输出：</strong> 利用 <code>Matplotlib</code> 绘制<strong>负荷性能图 (Operating Window)</strong>。</p>
+<ul>
+<li>
+<p><strong>如果点在圈里</strong>：初步判定合格。</p>
+</li>
+<li>
+<p><strong>如果点在圈外</strong>：程序会提示具体原因（如“位于过量雾沫夹带线之上”）。</p>
+</li>
+</ul>
+<p>同时，尝试自动计算<strong>操作弹性 (Turndown Ratio)</strong>。虽然这个计算目前比较粗糙，主要通过遍历操作线与边界线的交点来实现，但在做初步选型时，确实能省不少按计算的时间(不用np遍历也可以，scipy可以直接求两个线的交点,但是那样下的库有点多了)。</p>
+<p><img alt="image.png" src="../image%204.png" /></p>
+<h4 id="2-the-excel-table">2. 诊断日志表 (The Excel Table)<a class="headerlink" href="#2-the-excel-table" title="Permanent link">&para;</a></h4>
+<p>除了画图，程序还会生成一份详细的 Excel 诊断日志。这不仅仅是个 Log，更像是一份<strong>“塔板体检单”</strong>。</p>
+<p><img alt="image.png" src="../image%205.png" /></p>
+<p>表格里会记录：</p>
+<ul>
+<li>
+<p><strong>自动遍历的方案</strong>：塔径通过Aspen给出</p>
+</li>
+<li>
+<p><strong>瓶颈定位</strong>：直接告诉你精馏段哪块板子负荷最高，提馏段哪块板子最危险。</p>
+</li>
+<li>
+<p><strong>操作弹性</strong>：虽然目前的算法比较粗糙（基于几何交点），但能直接给出一个量化的数值（比如 2.5 或 3.0），做初步筛选非常方便。</p>
+</li>
+</ul>
+<p>06 进行实操</p>
+<p>1.首先进行塔运行</p>
+<p><img alt="image.png" src="../image%206.png" /></p>
+<p>2.进行塔的初始分段</p>
+<p><img alt="image.png" src="../image%207.png" /></p>
+<p>3.运行，得到水力学结果</p>
+<p><img alt="image.png" src="../image%208.png" /></p>
+<p>我们从这里可以看到，水力学是有警告的</p>
+<p>4.所以我们运行我们的程序来进行优化:</p>
+<p><img alt="image.png" src="../image%209.png" /></p>
+<p>5.进行计算后，我们查看Excel表，得到了经过计算后的塔径，塔间距等一些数据</p>
+<p><img alt="image.png" src="../image%2010.png" /></p>
+<p>6.我们回到Aspen,输入塔径、塔板间距</p>
+<p><img alt="image.png" src="../image%2011.png" /></p>
+<p>然后我们再输入几何尺寸参数</p>
+<p>7.精馏段参数:</p>
+<p><img alt="image.png" src="../image%2012.png" /></p>
+<p>8.提馏段参数:</p>
+<p><img alt="image.png" src="../image%2013.png" /></p>
+<p>9.运行，得到水力学结果:</p>
+<p><img alt="image.png" src="../image%2014.png" /></p>
+<p>此时说明，水力学结果是正常的，至此，整块内容结束</p>
+<h3 id="07">07 总结与展望<a class="headerlink" href="#07" title="Permanent link">&para;</a></h3>
+<p>这并不是一个成熟的商业软件，它更像是一个<strong>“极客玩具”</strong>。</p>
+<p>这 500 多行代码，验证了一条打通 <strong>Aspen (流程模拟)</strong>、<strong>Python (自动化)</strong> 和 <strong>PyTorch (数据拟合)</strong> 的技术路径。它证明了化工设计中那些繁琐、重复的查图工作，是有可能被低成本数字化的。</p>
+<p><strong>目前的不足：</strong></p>
+<ol>
+<li>
+<p><strong>鲁棒性</strong>：COM 接口偶尔会报错，Aspen 版本兼容性有待测试。</p>
+</li>
+<li>
+<p><strong>模型精度</strong>：神经网络在极值区域的拟合还需要更多数据喂养。</p>
+</li>
+<li>
+<p><strong>单位制</strong>：化工计算最头疼的单位换算（SI vs Field），目前主要适配了 SI 单位。</p>
+</li>
+<li>
+<p>只能算浮阀塔，不能算其他的塔板</p>
+</li>
+<li>
+<p>没经过大量测试，并不能说明稳定性</p>
+</li>
+<li>
+<p>公式来源于大学生的课程设计课本，不如工业实际的精准</p>
+</li>
+<li>
+<p>虽然性能图有大量校核部分需要校核的因素，但是没考虑压降</p>
+</li>
+<li>
+<p>手算公式与aspen公式算的也不一样，因此需要返回aspen再验证</p>
+</li>
+<li>
+<p>只能算精馏段提馏段各两个塔板的，如果想要绘制全部的需要使用者自行改源码</p>
+</li>
+</ol>
+<p><strong>写在最后：</strong> 工程的严谨性不容妥协，但工具的先进性值得追求。如果你也对 <strong>化工 + AI</strong> 的交叉领域感兴趣，或者想吐槽我的代码逻辑，欢迎在评论区留言交流。如果你觉得我这篇文章做的优质，欢迎点赞+关注，最后，欢迎大家来提建议，不胜感激</p>
+<p>毕竟，<strong>Done is better than perfect.</strong> 先跑起来，再慢慢优化。</p>
+<p><strong>附：工具依赖库</strong></p>
+<ul>
+<li>
+<p><code>win32com</code> (Aspen 交互核心)</p>
+</li>
+<li>
+<p><code>torch</code> (拟合模型)</p>
+</li>
+<li>
+<p><code>matplotlib</code> (绘图)</p>
+</li>
+<li>
+<p><code>tomli</code> (配置管理)</p>
+</li>
+</ul>
+<p><strong>附: 参考文献:</strong></p>
+<p>使用的公式主要来源《化工原理课程设
+计 刘雪暖》和《化学工程手册》</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+
+  Made with 
+  <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+    Material for MkDocs
+  </a>
+
+  <br>
+  
+  <span id="busuanzi_container_site_pv" style="display:none">
+      👀 本站总访问量 
+      <span id="busuanzi_value_site_pv" style="font-weight: bold;"></span> 次
+  </span>
+  
+  <span id="busuanzi_container_site_uv" style="display:none">
+      | 🙋‍♂️ 总访客数 
+      <span id="busuanzi_value_site_uv" style="font-weight: bold;"></span> 人
+  </span>
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
