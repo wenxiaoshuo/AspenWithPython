@@ -1,0 +1,4089 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录 Aspen Plus 与Python联动的学习历程">
+      
+      
+        <meta name="author" content="MrsJone">
+      
+      
+      
+        <link rel="prev" href="../../Aspen%2BGuide/%E7%89%A9%E7%90%86%E9%87%8F%E4%B8%8E%E8%AE%A1%E9%87%8F%E5%8D%95%E4%BD%8D/%E6%A3%80%E7%B4%A2%E6%9F%90%E4%B8%AA%E5%80%BC%E7%9A%84%E7%89%A9%E7%90%86%E9%87%8F%E5%8F%8A%E5%85%B6%E5%8D%95%E4%BD%8D/%E4%BB%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BD%A2%E5%BC%8F%E8%BF%94%E5%9B%9E%E7%9A%84%E2%80%9C%E5%80%BC%E2%80%9D%E7%9A%84%E5%8D%95%E4%BD%8D%EF%BC%9B/">
+      
+      
+        <link rel="next" href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误+8b2925d1 9391 49b2 ae1e 5e204d547d45 - MrsJone的 Aspen 学习笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="MrsJone的 Aspen 学习笔记" class="md-header__button md-logo" aria-label="MrsJone的 Aspen 学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MrsJone的 Aspen 学习笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误+8b2925d1 9391 49b2 ae1e 5e204d547d45
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wenxiaoshuo" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  👋 欢迎来到 MrsJone 的主页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Aspen%2BGuide/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Aspen+Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../%E4%BD%BF%E7%94%A8%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E4%B8%8Epython%E5%AF%B9%E5%8F%8D%E5%BA%94%E5%99%A8%E4%BC%98%E5%8C%96/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  使用遗传算法与python对反应器优化
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/" class="md-tabs__link">
+          
+  
+  
+  Aspen+Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Aspen+Plus+Python自动
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="md-tabs__link">
+          
+  
+  
+  Python与Aspen联动的一些技巧总结
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MrsJone的 Aspen 学习笔记" class="md-nav__button md-logo" aria-label="MrsJone的 Aspen 学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MrsJone的 Aspen 学习笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wenxiaoshuo" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    👋 欢迎来到 MrsJone 的主页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BD%BF%E7%94%A8%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E4%B8%8Epython%E5%AF%B9%E5%8F%8D%E5%BA%94%E5%99%A8%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用遗传算法与python对反应器优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Aspen+Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Plus+类的成员
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E4%BB%8E%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从其他语言调用自动化接口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%BC%E8%88%AA%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用变量浏览器导航树形结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%85%B3%E4%BA%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于自动化服务器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%9C%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A5%E5%8F%A3%E4%B8%AD%E5%AF%BC%E8%88%AA%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在自动化接口中导航树形结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%AF%BC%E5%87%BA%E6%96%87%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导出文件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%BC%95%E7%94%A8%E9%9D%9E%E6%A0%87%E9%87%8F%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引用非标量数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%8E%A7%E5%88%B6%E6%A8%A1%E6%8B%9F%E9%97%AE%E9%A2%98%EF%BC%88%E8%BF%90%E8%A1%8C%2B%2B%2B%E6%94%B6%E6%95%9B%E7%AD%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    控制模拟问题（运行+++收敛等
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%8E%A7%E5%88%B6%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    控制用户界面
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据值与节点属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%9F%A5%E7%9C%8B%2BAspen%2BPlus%2B%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7%E4%B8%8E%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    查看+Aspen+Plus+对象的属性与方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    流程图连通性与自动化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E7%89%A9%E7%90%86%E9%87%8F%E4%B8%8E%E8%AE%A1%E9%87%8F%E5%8D%95%E4%BD%8D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    物理量与计量单位
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9A%B4%E9%9C%B2%E7%9A%84%E5%AF%B9%E8%B1%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自动化服务器暴露的对象
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_15" id="__nav_4_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Plus+类的成员
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Aspen+Plus+类的成员
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HappLS+类成员
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/IHAPEngine%2B%E7%B1%BB%E6%88%90%E5%91%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IHAPEngine+类成员
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/IHAPLibRef%2B%E7%B1%BB%E6%88%90%E5%91%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IHAPLibRef+类成员
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/IHNode%2B%E7%B1%BB%E6%88%90%E5%91%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IHNode+类成员
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/IHNodeCol%2B%E7%B1%BB%E6%88%90%E5%91%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IHNodeCol+类成员
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_15_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_15_6" id="__nav_4_15_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HappLS+类成员
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_15_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_15_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    HappLS+类成员
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/IAPHappEvent%2B%E4%BA%8B%E4%BB%B6%E6%8E%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IAPHappEvent+事件接口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/VB%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VB属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/%E4%B8%8E%2BCreateObject%2B%2B%2B%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    与+CreateObject+++配合使用的初始化方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/%E4%B8%A5%E6%A0%BC%E9%80%9A%E8%BF%87%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9E%E7%8E%B0%E5%89%AA%E5%88%87%2B%E7%B2%98%E8%B4%B4%E7%9A%84%E9%80%89%E5%8C%BA%E7%BC%93%E5%86%B2%E5%8C%BA%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    严格通过自动化实现剪切+粘贴的选区缓冲区操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/%E5%9F%BA%E6%9C%AC%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基本文件操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/%E5%9F%BA%E6%9C%AC%E8%BF%90%E8%A1%8C%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基本运行操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/%E8%AE%BF%E9%97%AE%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E5%85%B6%E4%BB%96%E9%83%A8%E5%88%86%E7%9A%84%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    访问对象模型其他部分的属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_16" id="__nav_4_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从其他语言调用自动化接口
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    从其他语言调用自动化接口
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E4%BB%8E%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A5%E5%8F%A3/%E5%8F%A6%E8%AF%B7%E5%8F%82%E9%98%85%2B%E4%BB%8E%2BC%2B%2B%2B%E8%B0%83%E7%94%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    另请参阅+从+C+++调用自动化接口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_17" id="__nav_4_17_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在自动化接口中导航树形结构
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_17">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    在自动化接口中导航树形结构
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%9C%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A5%E5%8F%A3%E4%B8%AD%E5%AF%BC%E8%88%AA%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84/Dot%2B%E8%AE%B0%E6%B3%95%E5%AF%BC%E8%88%AA%E6%A0%91%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dot+记法导航树结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%9C%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A5%E5%8F%A3%E4%B8%AD%E5%AF%BC%E8%88%AA%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84/%E4%BE%8B%E5%AD%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    例子
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%9C%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A5%E5%8F%A3%E4%B8%AD%E5%AF%BC%E8%88%AA%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E7%9A%84%E9%99%90%E5%88%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自动化数据访问的限制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_18" id="__nav_4_18_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引用非标量数据
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_18">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引用非标量数据
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%BC%95%E7%94%A8%E9%9D%9E%E6%A0%87%E9%87%8F%E6%95%B0%E6%8D%AE/%E4%B8%89%E6%A0%87%E8%AF%86%E7%AC%A6%E5%8F%98%E9%87%8F%E8%AE%BF%E9%97%AE%EF%BC%9A%E5%8F%8D%E5%BA%94%E7%B3%BB%E6%95%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三标识符变量访问：反应系数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%BC%95%E7%94%A8%E9%9D%9E%E6%A0%87%E9%87%8F%E6%95%B0%E6%8D%AE/%E5%8D%95%E6%A0%87%E8%AF%86%E7%AC%A6%E5%8F%98%E9%87%8F%E8%AE%BF%E9%97%AE%EF%BC%9A%E5%A1%94%E6%9D%BF%E6%B8%A9%E5%BA%A6%E5%88%86%E5%B8%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    单标识符变量访问：塔板温度分布
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%BC%95%E7%94%A8%E9%9D%9E%E6%A0%87%E9%87%8F%E6%95%B0%E6%8D%AE/%E5%8F%8C%E6%A0%87%E8%AF%86%E7%AC%A6%E5%8F%98%E9%87%8F%E8%AE%BF%E9%97%AE%EF%BC%9A%E5%A1%94%E6%9D%BF%E7%BB%84%E6%88%90%E5%88%86%E5%B8%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    双标识符变量访问：塔板组成分布
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_18_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_18_4" id="__nav_4_18_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    单标识符变量访问：塔板温度分布
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_18_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_18_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    单标识符变量访问：塔板温度分布
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E5%BC%95%E7%94%A8%E9%9D%9E%E6%A0%87%E9%87%8F%E6%95%B0%E6%8D%AE/%E5%8D%95%E6%A0%87%E8%AF%86%E7%AC%A6%E5%8F%98%E9%87%8F%E8%AE%BF%E9%97%AE%EF%BC%9A%E5%A1%94%E6%9D%BF%E6%B8%A9%E5%BA%A6%E5%88%86%E5%B8%83/%E9%80%9A%E8%BF%87%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE%E5%A1%94%E6%B8%A9%E5%BA%A6%E5%88%86%E5%B8%83%E7%9A%84%E7%A4%BA%E4%BE%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通过自动化接口访问塔温度分布的示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_19" id="__nav_4_19_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    控制模拟问题(运行+++收敛等)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_19">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    控制模拟问题(运行+++收敛等)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%8E%A7%E5%88%B6%E6%A8%A1%E6%8B%9F%E9%97%AE%E9%A2%98%28%E8%BF%90%E8%A1%8C%2B%2B%2B%E6%94%B6%E6%95%9B%E7%AD%89%29/%E5%8F%A6%E8%AF%B7%E5%8F%82%E9%98%85-Run2%2B%E6%8E%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    另请参阅 Run2+接口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%8E%A7%E5%88%B6%E6%A8%A1%E6%8B%9F%E9%97%AE%E9%A2%98%28%E8%BF%90%E8%A1%8C%2B%2B%2B%E6%94%B6%E6%95%9B%E7%AD%89%29/%E5%BF%AB%E9%80%9F%E5%88%A4%E6%96%AD%E5%90%84%E7%B1%BB%E8%AE%A1%E7%AE%97%E6%88%90%E8%B4%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    快速判断各类计算成败
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_20" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_20" id="__nav_4_20_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    控制用户界面
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_20">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    控制用户界面
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%8E%A7%E5%88%B6%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2/%E5%A4%84%E7%90%86%2BAspen%2BPlus%2B%E4%BA%8B%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    处理+Aspen+Plus+事件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%8E%A7%E5%88%B6%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2/%E6%8A%91%E5%88%B6%EF%BC%88%E4%B8%8D%E5%BC%B9%E5%87%BA%EF%BC%89%E5%AF%B9%E8%AF%9D%E6%A1%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    抑制（不弹出）对话框
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_21" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_21" id="__nav_4_21_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据值与节点属性
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_21">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数据值与节点属性
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E6%95%B0%E6%8D%AE%E5%80%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据值
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    节点属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_21_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_21_3" id="__nav_4_21_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    节点属性
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_21_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_21_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    节点属性
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E4%B8%8E%E5%80%BC%E7%9B%B8%E5%85%B3%E7%9A%84%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    与值相关的属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E4%BE%8B%E5%AD%901/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    例子1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E4%BE%8B%E5%AD%902/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    例子2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    其他属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E5%8F%98%E9%87%8F%E8%8A%82%E7%82%B9%E7%9A%84%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    变量节点的属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E5%A4%9A%E7%BB%B4%E5%8F%98%E9%87%8F%E8%8A%82%E7%82%B9%E7%9A%84%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多维变量节点的属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E6%8E%A5%E7%AB%AF%E5%8F%A3%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    流程图连接端口属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%95%B0%E6%8D%AE%E5%80%BC%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7/%E8%AE%B0%E5%BD%95%E7%9A%84%E5%85%83%E6%95%B0%E6%8D%AE%E5%B1%9E%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    记录的元数据属性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_22" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_22" id="__nav_4_22_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    流程图连通性与自动化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_22_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_22">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    流程图连通性与自动化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E5%BA%93%E5%8F%8A%E6%A8%A1%E5%9E%8B%E9%80%89%E9%A1%B9%E6%9D%BF%E5%88%86%E7%B1%BB%E7%9A%84%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库及模型选项板分类的操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%A8%A1%E5%9D%97%E4%B8%8E%E6%B5%81%E8%82%A1%E7%9A%84%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模块与流股的操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E6%8E%A5%E7%A4%BA%E4%BE%8B%E4%BB%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    流程图连接示例代
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E8%AE%BF%E9%97%AE%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E6%8E%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    访问流程图连接
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_22_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_22_5" id="__nav_4_22_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库及模型选项板分类的操作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_22_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_22_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库及模型选项板分类的操作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E5%BA%93%E5%8F%8A%E6%A8%A1%E5%9E%8B%E9%80%89%E9%A1%B9%E6%9D%BF%E5%88%86%E7%B1%BB%E7%9A%84%E6%93%8D%E4%BD%9C/%2BIHAPLibRef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    +IHAPLibRef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_22_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_22_6" id="__nav_4_22_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模块与流股的操作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_22_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_22_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    模块与流股的操作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%A8%A1%E5%9D%97%E4%B8%8E%E6%B5%81%E8%82%A1%E7%9A%84%E6%93%8D%E4%BD%9C/%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E6%A8%A1%E5%9D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    添加与删除模块
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%A8%A1%E5%9D%97%E4%B8%8E%E6%B5%81%E8%82%A1%E7%9A%84%E6%93%8D%E4%BD%9C/%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E6%B5%81%E8%82%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    添加与删除流股
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%A8%A1%E5%9D%97%E4%B8%8E%E6%B5%81%E8%82%A1%E7%9A%84%E6%93%8D%E4%BD%9C/%E8%BF%9E%E6%8E%A5%E4%B8%8E%E6%96%AD%E5%BC%80%E6%B5%81%E8%82%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    连接与断开流股
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_22_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_22_7" id="__nav_4_22_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    访问流程图连接
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_22_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_22_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    访问流程图连接
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E9%80%9A%E6%80%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/%E8%AE%BF%E9%97%AE%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%BF%9E%E6%8E%A5/%E8%A1%A8%E6%A0%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    表格
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_23" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_23" id="__nav_4_23_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    物理量与计量单位
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_23_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_23">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    物理量与计量单位
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E7%89%A9%E7%90%86%E9%87%8F%E4%B8%8E%E8%AE%A1%E9%87%8F%E5%8D%95%E4%BD%8D/%E5%9C%A8%2BAspen%2BPlus%2B%E8%BF%90%E8%A1%8C%E4%B8%AD%E6%9B%B4%E6%94%B9%E5%8D%95%E4%BD%8D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在+Aspen+Plus+运行中更改单位
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E7%89%A9%E7%90%86%E9%87%8F%E4%B8%8E%E8%AE%A1%E9%87%8F%E5%8D%95%E4%BD%8D/%E5%B0%86%E8%AF%A5%E5%80%BC%E8%BD%AC%E6%8D%A2%E5%88%B0%E5%8F%A6%E4%B8%80%E5%A5%97%E5%8D%95%E4%BD%8D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    将该值转换到另一套单位
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E7%89%A9%E7%90%86%E9%87%8F%E4%B8%8E%E8%AE%A1%E9%87%8F%E5%8D%95%E4%BD%8D/%E6%A3%80%E7%B4%A2%E6%9F%90%E4%B8%AA%E5%80%BC%E7%9A%84%E7%89%A9%E7%90%86%E9%87%8F%E5%8F%8A%E5%85%B6%E5%8D%95%E4%BD%8D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    检索某个值的物理量及其单位
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_23_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_23_4" id="__nav_4_23_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    检索某个值的物理量及其单位
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_23_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_23_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    检索某个值的物理量及其单位
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E7%89%A9%E7%90%86%E9%87%8F%E4%B8%8E%E8%AE%A1%E9%87%8F%E5%8D%95%E4%BD%8D/%E6%A3%80%E7%B4%A2%E6%9F%90%E4%B8%AA%E5%80%BC%E7%9A%84%E7%89%A9%E7%90%86%E9%87%8F%E5%8F%8A%E5%85%B6%E5%8D%95%E4%BD%8D/%E4%BB%A5%E2%80%9C%E5%8D%95%E4%BD%8D%E8%A1%A8%E2%80%9D%E8%A1%8C%2B%E5%88%97%E5%BC%95%E7%94%A8%E5%BD%A2%E5%BC%8F%E8%BF%94%E5%9B%9E%E7%9A%84%E7%89%A9%E7%90%86%E9%87%8F%E5%8F%8A%E5%85%B6%E5%8D%95%E4%BD%8D%E3%80%82/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    以“单位表”行+列引用形式返回的物理量及其单位。
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Aspen%2BGuide/%E7%89%A9%E7%90%86%E9%87%8F%E4%B8%8E%E8%AE%A1%E9%87%8F%E5%8D%95%E4%BD%8D/%E6%A3%80%E7%B4%A2%E6%9F%90%E4%B8%AA%E5%80%BC%E7%9A%84%E7%89%A9%E7%90%86%E9%87%8F%E5%8F%8A%E5%85%B6%E5%8D%95%E4%BD%8D/%E4%BB%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BD%A2%E5%BC%8F%E8%BF%94%E5%9B%9E%E7%9A%84%E2%80%9C%E5%80%BC%E2%80%9D%E7%9A%84%E5%8D%95%E4%BD%8D%EF%BC%9B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    以字符串形式返回的“值”的单位；
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Plus+Python自动
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Aspen+Plus+Python自动
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误+8b2925d1 9391 49b2 ae1e 5e204d547d45
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误+8b2925d1 9391 49b2 ae1e 5e204d547d45
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        示例 1：查看基础列表属性
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-aspen-happls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        示例 2：透视 Aspen 对象 (HappLS)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-add-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 添加组分 (Add Components)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-property-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 设定热力学方法 (Property Method)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-refresh-bips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 激活二元交互参数 (Refresh BIPs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-add-components_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 添加组分 (Add Components)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.为什么不能用 .Add() 添加组分？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.为什么不能用 .Add() 添加组分？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-vb-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 接口差异溯源：VB 与 Python 的交互机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python与Aspen联动的一些技巧总结
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python与Aspen联动的一些技巧总结
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python与Aspen联动的一些技巧总结
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python与Aspen联动的一些技巧总结
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python与Aspen联动的一些技巧总结
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/aspen.Tree.FindNode%2B%2B.Elements%E6%98%AF%E4%B8%8D%E6%98%AF%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    aspen.Tree.FindNode++.Elements是不是可迭代对象
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/Python%E4%B8%8EAspen%E8%81%94%E5%8A%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    迭代器和生成器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        示例 1：查看基础列表属性
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-aspen-happls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        示例 2：透视 Aspen 对象 (HappLS)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-add-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 添加组分 (Add Components)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-property-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 设定热力学方法 (Property Method)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-refresh-bips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 激活二元交互参数 (Refresh BIPs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-add-components_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 添加组分 (Add Components)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.为什么不能用 .Add() 添加组分？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.为什么不能用 .Add() 添加组分？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-vb-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 接口差异溯源：VB 与 Python 的交互机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误+8b2925d1 9391 49b2 ae1e 5e204d547d45</h1>
+
+<p>📝 <strong>致谢</strong>：本文核心思路源自群友 <strong>WnWolf</strong> 的指路与探讨。</p>
+<p>🤝交流群:562721026</p>
+<p><strong>一. 前言：打破 VB 文档的“魔咒”</strong></p>
+<p>Aspen Plus 官方提供的 Automation Help 文档主要是基于 VB (Visual Basic) 编写的。对于 Python 开发者来说，直接照搬文档往往会遇到“水土不服”的问题。</p>
+<p>由于文档更新滞后，许多方法在 Python 层面已经<strong>被淘汰</strong>或<strong>行为机制不同</strong>。</p>
+<p>Aspen的help文档给出的代码并不全，原因可能是因为这个Aspen Help文档的基础语言是VB，而我探讨的是Python层面的,所以一些方法和VB可能不太相同，也有可能是一些方法被淘汰了，但是aspen没说，比如aspen.Run()就被淘汰了，换成aspen.Run2(),可是现在网上的一些教程还在用aspen.Run2(),其次,aspen.Close(),只能关闭而不能清后台，最应该使用的是最新的aspen.Quit()</p>
+<ol>
+<li>探索黑盒的神器：<code>dir()</code></li>
+</ol>
+<p>由于 Aspen 的底层接口是基于 C++ 开发的 COM 组件，Python 在调用时属于<strong>动态绑定 (Late Binding)</strong>。这导致了一个让新手极度抓狂的现象：</p>
+<blockquote>
+<p><strong>当你用鼠标左键点击对象，或者试图让 IDE 自动补全时，由于无法进行静态分析，屏幕上什么也不会显示。</strong></p>
+</blockquote>
+<p>此时，Python 内置的 <strong>内省函数 (Introspection)</strong> <code>dir()</code> 就成了我们在黑暗中探索的“手电筒”。它可以返回当前模块或对象的所有属性与方法列表。</p>
+<h3 id="1">示例 1：查看基础列表属性<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p><em>注：双下划线开头（如 <code>__add__</code>）的是 Python 的魔法方法，此处暂不展开。</em></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">dir</span><span class="p">(</span><span class="err">[ ])    # 查看列表的方法</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="err">[&#39;__add__&#39;, &#39;__class__&#39;, &#39;__contains__&#39;, &#39;__delattr__&#39;, &#39;__delitem__&#39;, &#39;__delslice__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__getattribute__&#39;, &#39;__getitem__&#39;, &#39;__getslice__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__iadd__&#39;, &#39;__imul__&#39;, &#39;__init__&#39;, &#39;__iter__&#39;, &#39;__le__&#39;, &#39;__len__&#39;, &#39;__lt__&#39;, &#39;__mul__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__reversed__&#39;, &#39;__rmul__&#39;, &#39;__setattr__&#39;, &#39;__setitem__&#39;, &#39;__setslice__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;append&#39;, &#39;count&#39;, &#39;extend&#39;, &#39;index&#39;, &#39;insert&#39;, &#39;pop&#39;, &#39;remove&#39;, &#39;reverse&#39;, &#39;sort&#39;]</span>
+</code></pre></div>
+<h3 id="2-aspen-happls">示例 2：透视 Aspen 对象 (HappLS)<a class="headerlink" href="#2-aspen-happls" title="Permanent link">&para;</a></h3>
+<p>让我们以 <code>HappLS</code> 对象为例进行实测（关于 HappLS 的详细定义可参考）：</p>
+<p><a href="https://wenxiaoshuo.github.io/AspenWithPython/Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/">https://wenxiaoshuo.github.io/AspenWithPython/Aspen%2BGuide/Aspen%2BPlus%2B%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98/HappLS%2B%E7%B1%BB%E6%88%90%E5%91%98/</a>）</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">aspen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">win32</span><span class="p">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="c1">&#39;Apwn.Document&#39;)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">aspen</span><span class="p">.</span><span class="n">InitFromArchive2</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">r</span><span class="c1">&#39;D:\python pa chong\AI with Aspen\text.bkp&#39;))</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">dir</span><span class="p">(</span><span class="n">aspen</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="err">#[&#39;Add&#39;,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w"> </span><span class="c1">&#39;Application&#39;,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w"> </span><span class="c1">&#39;CLSID&#39;,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w"> </span><span class="c1">&#39;Count&#39;,</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w"> </span><span class="c1">&#39;Dimension&#39;,</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w"> </span><span class="c1">&#39;DimensionName&#39;,</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w"> </span><span class="c1">&#39;GetIsNamedDimension&#39;,</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w"> </span><span class="c1">&#39;Insert&#39;,</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w"> </span><span class="c1">&#39;InsertRow&#39;,</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w"> </span><span class="c1">&#39;IsNamedDimension&#39;,</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w"> </span><span class="c1">&#39;Item&#39;,</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w"> </span><span class="c1">&#39;ItemName&#39;,</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w"> </span><span class="c1">&#39;Label&#39;,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w"> </span><span class="c1">&#39;LabelAttribute&#39;,</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w"> </span><span class="c1">&#39;LabelAttributeType&#39;,</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w"> </span><span class="c1">&#39;LabelLocation&#39;,</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w"> </span><span class="c1">&#39;LabelNode&#39;,</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w"> </span><span class="c1">&#39;Parent&#39;,</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w"> </span><span class="c1">&#39;Remove&#39;,</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w"> </span><span class="c1">&#39;RemoveRow&#39;,</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w"> </span><span class="c1">&#39;Reorder&#39;,</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w"> </span><span class="c1">&#39;RowCount&#39;,</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w"> </span><span class="c1">&#39;SetItemName&#39;,</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w"> </span><span class="c1">&#39;SetLabel&#39;,</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w"> </span><span class="c1">&#39;SetLabelAttribute&#39;,</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w"> </span><span class="c1">&#39;_ApplyTypes_&#39;,</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w"> </span><span class="c1">&#39;__call__&#39;,</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w"> </span><span class="c1">&#39;__class__&#39;,</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w"> </span><span class="c1">&#39;__delattr__&#39;,</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w"> </span><span class="c1">&#39;__dict__&#39;,</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w"> </span><span class="c1">&#39;__dir__&#39;,</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w"> </span><span class="c1">&#39;__doc__&#39;,</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w"> </span><span class="c1">&#39;__eq__&#39;,</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w"> </span><span class="c1">&#39;__format__&#39;,</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w"> </span><span class="c1">&#39;__ge__&#39;,</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w"> </span><span class="c1">&#39;__getattr__&#39;,</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w"> </span><span class="c1">&#39;__getattribute__&#39;,</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w"> </span><span class="c1">&#39;__gt__&#39;,</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="w"> </span><span class="c1">&#39;__hash__&#39;,</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w"> </span><span class="c1">&#39;__init__&#39;,</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="w"> </span><span class="c1">&#39;__init_subclass__&#39;,</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="w"> </span><span class="c1">&#39;__int__&#39;,</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="w"> </span><span class="c1">&#39;__iter__&#39;,</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a><span class="w"> </span><span class="c1">&#39;__le__&#39;,</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="w"> </span><span class="c1">&#39;__len__&#39;,</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a><span class="w"> </span><span class="c1">&#39;__lt__&#39;,</span>
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a><span class="w"> </span><span class="c1">&#39;__module__&#39;,</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="w"> </span><span class="c1">&#39;__ne__&#39;,</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="w"> </span><span class="c1">&#39;__new__&#39;,</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a><span class="w"> </span><span class="c1">&#39;__nonzero__&#39;,</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a><span class="w"> </span><span class="c1">&#39;__reduce__&#39;,</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a><span class="w"> </span><span class="c1">&#39;__reduce_ex__&#39;,</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a><span class="w"> </span><span class="c1">&#39;__repr__&#39;,</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a><span class="w"> </span><span class="c1">&#39;__setattr__&#39;,</span>
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a><span class="w"> </span><span class="c1">&#39;__sizeof__&#39;,</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a><span class="w"> </span><span class="c1">&#39;__str__&#39;,</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a><span class="w"> </span><span class="c1">&#39;__subclasshook__&#39;,</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a><span class="w"> </span><span class="c1">&#39;__weakref__&#39;,</span>
+<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a><span class="w"> </span><span class="c1">&#39;_get_good_object_&#39;,</span>
+<a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a><span class="w"> </span><span class="c1">&#39;_get_good_single_object_&#39;,</span>
+<a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a><span class="w"> </span><span class="c1">&#39;_oleobj_&#39;,</span>
+<a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a><span class="w"> </span><span class="c1">&#39;_prop_map_get_&#39;,</span>
+<a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a><span class="w"> </span><span class="c1">&#39;_prop_map_put_&#39;,</span>
+<a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a><span class="w"> </span><span class="c1">&#39;coclass_clsid&#39;]</span>
+</code></pre></div>
+<p>通过 <code>dir(aspen)</code>，我们可以清晰地看到类似 <code>InsertRow</code>、<code>SetLabel</code> 等方法。这些往往就是操作表格数据的关键，而在 IDE 的自动补全中是完全不可见的。</p>
+<p><img alt="image.png" src="../image.png" /></p>
+<p>如果 <code>dir()</code> 提供的属性列表还不够详细，Python 的 <code>help()</code> 函数可以提供更深层的帮助信息。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">help</span><span class="p">(</span><span class="n">aspen</span><span class="p">)</span>
+</code></pre></div>
+<p>运行上述代码，控制台将输出关于该对象的详细类定义、方法解析顺序 (MRO) 以及从类型库中提取的文档字符串。当官方 Help 文档语焉不详时，这往往能提供意想不到的线索。</p>
+<p><img alt="image.png" src="../image%201.png" /></p>
+<p>二.核心实操：物性配置三部曲</p>
+<p>在 Python 中配置物性，不能像在界面上那样点点点，而是需要理解其背后的“表格逻辑”。这一过程分为三步：</p>
+<h3 id="1-add-components">1. 添加组分 (Add Components)<a class="headerlink" href="#1-add-components" title="Permanent link">&para;</a></h3>
+<p>很多朋友尝试用 <code>.Add()</code> 方法添加组分，结果发现无效。 <strong>真相是</strong>：Aspen 的组分列表本质上是一个二维表格。正确的操作逻辑是“<strong>先插入空行，再填入数据</strong>”。</p>
+<p>我们利用 <code>dir()</code> 和 <code>help(node.Elements)</code> 挖掘出了两个关键方法：</p>
+<ul>
+<li>
+<p><strong><code>InsertRow</code></strong>：插入行。</p>
+</li>
+<li>
+<p><strong><code>SetLabel</code></strong>：设置标签（填入组分ID）。</p>
+</li>
+</ul>
+<p><strong>代码实现：</strong></p>
+<h3 id="2-property-method">2. 设定热力学方法 (Property Method)<a class="headerlink" href="#2-property-method" title="Permanent link">&para;</a></h3>
+<p>在修改设置前，强烈建议先设置 <code>SuppressDialogs = 1</code>，防止 Aspen 弹出确认窗口导致脚本卡死。</p>
+<h3 id="3-refresh-bips">3. 激活二元交互参数 (Refresh BIPs)<a class="headerlink" href="#3-refresh-bips" title="Permanent link">&para;</a></h3>
+<p>这是最容易踩的坑：修改了组分或物性方法后，Aspen <strong>不会自动加载</strong> 对应的二元交互参数（BIP），这会导致计算结果严重偏差。</p>
+<p>所以需要Run2()一下</p>
+<p>三.物性配置:</p>
+<h3 id="1-add-components_1">1. 添加组分 (Add Components)<a class="headerlink" href="#1-add-components_1" title="Permanent link">&para;</a></h3>
+<p>很多朋友尝试用 <code>.Add()</code> 方法添加组分，结果发现无效。 <strong>真相是</strong>：Aspen 的组分列表本质上是一个二维表格。正确的操作逻辑是“<strong>先插入空行，再填入数据</strong>”。</p>
+<p>我们利用 <code>dir()</code> 和 <code>help(node.Elements)</code> 挖掘出了两个关键方法：</p>
+<ul>
+<li>
+<p><strong><code>InsertRow</code></strong>：插入行。</p>
+</li>
+<li>
+<p><strong><code>SetLabel</code></strong>：设置标签（填入组分ID）。</p>
+</li>
+</ul>
+<p><img alt="image.png" src="../image%202.png" /></p>
+<p>首先复制，然后从变量浏览器搜</p>
+<p><img alt="image.png" src="../image%203.png" /></p>
+<p>然后得到节点</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">Application</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">FindNode</span><span class="p">(</span><span class="s2">&quot;\Data\Components\Specifications\Input\TYPE&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>然后咱们进行分析，这个不能用Add,因为这个我试过了，应该用的方法是SetLabel</p>
+<p>第一个方法:InsertRow()</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">InsertRow</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">Dimension</span><span class="o">=&lt;</span><span class="n">PyOleEmpty</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="mi">0</span><span class="n">x00000143ED069F00</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">location</span><span class="o">=&lt;</span><span class="n">PyOleEmpty</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="mi">0</span><span class="n">x00000143ED069F00</span><span class="o">&gt;</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w"> </span><span class="o">|</span><span class="w">      </span><span class="n">Inserts</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">location</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="n">dimension</span><span class="p">.</span>
+</code></pre></div>
+<p>第一个表示维度(0表示行，1表示列,这里是行)，第二个表示位置，0表示在第一行插入</p>
+<p>第二个方法:SetLabel</p>
+<p>你可能会疑惑：<em>“为什么官方 Help 文档里查不到 <code>SetLabel</code>？为什么文档里 <code>Label</code> 的注释说它有返回值，但 Python 里却要分成两个函数？”</em></p>
+<p>这其实是 <strong>COM 组件的历史遗留问题</strong>。</p>
+<ol>
+<li>
+<p><strong>VB 的遗产</strong>： Aspen 的接口最早是为 VB 设计的。在 VB 语法中，<code>Label</code> 是一个<strong>带参数属性 (Indexed Property)</strong>，它既能读（Get）也能写（Set）。</p>
+<ul>
+<li>
+<p>读取：<code>x = Label(0, 0)</code></p>
+</li>
+<li>
+<p>写入：<code>Label(0, 0) = "METHANOL"</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Python/C++ 的水土不服</strong>： 当这套接口暴露给 Python 时，带参数的属性处理起来非常繁琐。为了解决这个问题，Aspen 的底层工程师将其<strong>拆分</strong>成了两个独立方法：</p>
+<ul>
+<li>
+<p><strong><code>Label</code></strong>：专门用于获取（Get）。</p>
+</li>
+<li>
+<p><strong><code>SetLabel</code></strong>：专门用于设置（Set）。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>文档的误导</strong>： 最坑的是，工程师在写 <code>SetLabel</code> 的文档时，直接复制了 <code>Label</code> 的注释。这就导致文档声称 <code>SetLabel</code> 会 "Returns the value..."，但实际上它只是一个执行动作的 void 函数（类似 Python 的 <code>list.pop</code> 或 <code>insert</code>）。</p>
+</li>
+</ol>
+<p><strong>总结</strong>：在 Python 中调用 Aspen，我们要时刻保持警惕，<strong>文档仅供参考，实操还得靠 <code>dir()</code> 和 <code>help()</code></strong>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">tbl</span><span class="p">.</span><span class="n">SetLabel</span><span class="p">(</span><span class="n">ROW_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="no">False</span><span class="p">,</span><span class="n">cid</span><span class="p">):</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w"> </span><span class="o">|</span><span class="w">      </span><span class="n">Returns</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">attribute</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">location</span><span class="p">,</span><span class="w"> </span><span class="n">along</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">dimension</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">attrnum</span><span class="w"> </span><span class="p">(</span><span class="n">see</span><span class="w"> </span><span class="n">HAPAttributeNumber</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">possible</span><span class="w"> </span><span class="n">values</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">force</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="n">unused</span><span class="p">).</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">      </span><span class="err">#这个的意思应该不是return,应该是Set,Aspen翻译错了</span>
+</code></pre></div>
+<p>第一个表示维度(0表示行，1表示列,这里是行)，第二个表示行，第三个False不用管，第四个指的是组分，可以用Water,CH4,"7732-18-5"等表示</p>
+<p>如何使用:</p>
+<p>我们如果想弄一行，可以这样</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">node</span><span class="o">=</span><span class="n">aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">FindNode</span><span class="p">(</span><span class="s2">&quot;\Data\Components\Specifications\Input\TYPE&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1">&#39;&#39;&#39;这是个节点&#39;&#39;&#39;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">tlb</span><span class="o">=</span><span class="n">node</span><span class="p">.</span><span class="n">Elements</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">tlb</span><span class="p">.</span><span class="n">InsertRow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">tlb</span><span class="p">.</span><span class="n">SetLabel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="no">False</span><span class="p">,</span><span class="s2">&quot;CH3OH&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="image.png" src="../image%204.png" /></p>
+<p>这里我们就插入一个节点，如果想插入多个，我们可以进行循环</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">node</span><span class="o">=</span><span class="n">aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">FindNode</span><span class="p">(</span><span class="s2">&quot;\Data\Components\Specifications\Input\TYPE&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1">&#39;&#39;&#39;这是个节点&#39;&#39;&#39;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">tlb</span><span class="o">=</span><span class="n">node</span><span class="p">.</span><span class="n">Elements</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">list1</span><span class="o">=</span><span class="err">[&quot;Water&quot;,&quot;CH3OH&quot;]</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">list1</span><span class="p">:</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="n">tlb</span><span class="p">.</span><span class="n">InsertRow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nb">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="n">tlb</span><span class="p">.</span><span class="n">SetLabel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="no">False</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+<p>2.热力学(物性方法)设置?</p>
+<p>这里提个醒，在做这个之前要先抑制窗口</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">Aspen</span><span class="p">.</span><span class="n">SuppressDialogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="err">#表示抑制窗口</span>
+</code></pre></div>
+<p>然后这里的话是通过热力学来设置UNIQUAC</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">h</span><span class="o">=</span><span class="n">aspen</span><span class="p">.</span><span class="n">Tree</span><span class="p">.</span><span class="n">FindNode</span><span class="p">(</span><span class="s2">&quot;\Data\Properties\Specifications\Input\GBASEOPSET&quot;</span><span class="p">).</span><span class="n">Value</span><span class="o">=</span><span class="s2">&quot;UNIQUAC&quot;</span>
+</code></pre></div>
+<p>3.更新二元交互组分？</p>
+<p>使用aspen.Run2()</p>
+<p>使用之前记着抑制窗口</p>
+<p>这样就弄好了</p>
+<p>四.解决疑惑:</p>
+<h2 id="1-add">1.为什么不能用 <code>.Add()</code> 添加组分？<a class="headerlink" href="#1-add" title="Permanent link">&para;</a></h2>
+<p><strong>Q：在操作 Streams（流股）或 Blocks（模块）时都可以用 <code>.Add()</code>，为什么组分不行？</strong></p>
+<p><strong>A：数据结构决定了操作方式。</strong> Aspen 的 <code>Components</code> 节点本质上不是一个简单的“列表 (List)”，而是一个<strong>二维表格 (Table)</strong>。</p>
+<ul>
+<li>
+<p>对于列表，我们可以直接 Append/Add；</p>
+</li>
+<li>
+<p>对于表格，必须遵循“<strong>先造行，再填空</strong>”的逻辑。</p>
+</li>
+</ul>
+<p>这也是为什么我们需要配合使用：</p>
+<ol>
+<li>
+<p><strong><code>InsertRow</code></strong>：在表格中开辟新的存储空间。</p>
+</li>
+<li>
+<p><strong><code>SetLabel</code></strong>：在指定的行列位置写入数据。</p>
+</li>
+</ol>
+<h4 id="2-vb-python">2. 接口差异溯源：VB 与 Python 的交互机制<a class="headerlink" href="#2-vb-python" title="Permanent link">&para;</a></h4>
+<p>在 Python 自动化开发中，开发者常面临两个困惑：</p>
+<p>(1)为何 Python 必须使用 <code>SetLabel</code> 方法，而官方 Help 文档中未收录此方法？</p>
+<p>(2)为何官方文档标注 <code>SetLabel</code> 具有返回值，但实际调用返回 <code>None</code>？</p>
+<p><strong>根本原因在于 Aspen 的 COM 接口是基于 Visual Basic (VB) 标准设计的。</strong></p>
+<p><strong>(1)带参数属性 (Indexed Property) 的差异</strong>： 在 VB 语言规范中，<code>Label</code> 被定义为一个带参数的属性。它天然支持读写双向操作：</p>
+<ul>
+<li>
+<p><strong>Getter (读)</strong>：<code>val = Label(row, col)</code></p>
+</li>
+<li>
+<p><strong>Setter (写)</strong>：<code>Label(row, col) = "Value"</code></p>
+</li>
+</ul>
+<p><strong>(2)OLE Automation 的拆分机制</strong>： 当通过 OLE Automation 暴露给 Python 或 C++ 等强区分读写方法的语言时，底层的类型库（Type Library）会自动将此属性拆解为两个独立方法以确保兼容性：</p>
+<ul>
+<li>
+<p><strong><code>Label</code></strong>：映射为读取方法。</p>
+</li>
+<li>
+<p><strong><code>SetLabel</code></strong>：映射为写入方法。</p>
+</li>
+</ul>
+<p><strong>(3)文档描述谬误</strong>： Aspen 官方文档在编写 <code>SetLabel</code> 条目时，错误地复用了 <code>Label</code> 属性的描述文本。文档中声称的 "Returns the value..." 实际上描述的是 <code>Label</code> 的行为。在 Python 实践中，<code>SetLabel</code> 是一个纯粹的执行方法（Void Operation），仅负责修改数据，不返回任何结果。</p>
+<p>Aspen 最早是基于 VB/VBA 逻辑构建的。在 VB 中，<code>Label(row, col)</code> 是一个<strong>带参数的属性 (Indexed Property)</strong>。在 VB 里，你可以 <code>x = Label(0,0)</code> (Get)，也可以 <code>Label(0,0) = "A"</code> (Set)。到了 C++ 和 Python（通过 OLE Automation），带参数的属性处理起来很麻烦，所以底层往往会拆分成两个独立的方法：一个负责读（<code>Label</code>），一个负责写（<code>SetLabel</code>）。文档编写者直接把 <code>Label</code> 的说明（Returns...）复制给了 <code>SetLabel</code>，却忘了改掉 <code>Returns</code> 这个词，导致了误导。在 Python 看来，这就是一个 <code>GetLabel</code> 和 <code>SetLabel</code> 的关系。</p>
+<p>无独有偶,AttributeValue方法同样在VB也可以进行读写，但是在Python里面也添加了新的方法，感兴趣的可以按照我上面的进行查看，注意，有的属性只有可读属性</p>
+<p>3.关于单位的两种设法</p>
+<p>大家可以通过Aspen部署的修改单位来直接进行操作，AttributeValue,但是我这里其实更推荐大家使用通过切换单位集(我用的是MET)，然后换单位进行操作.</p>
+<p><strong>五.结语</strong></p>
+<p>Aspen 的 Python 自动化之路充满了文档盲区，但只要理解了它<strong>基于表格 (Table-based)</strong> 的底层逻辑以及 <strong>VB 到 Python 的接口映射关系</strong>，一切看似离奇的报错都能找到答案。</p>
+<p>如果这篇硬核避坑指南帮到了你，欢迎<strong>点赞 + 在看</strong>，你的支持是我持续输出高质量化工自动化内容的动力！🤝</p>
+<p>Ciallo～(∠・ω&lt; )⌒★</p>
+<p><img alt="unnamed.jpg" src="../unnamed.jpg" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+
+  Made with 
+  <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+    Material for MkDocs
+  </a>
+
+  <br>
+  
+  <span id="busuanzi_container_site_pv" style="display:none">
+      👀 本站总访问量 
+      <span id="busuanzi_value_site_pv" style="font-weight: bold;"></span> 次
+  </span>
+  
+  <span id="busuanzi_container_site_uv" style="display:none">
+      | 🙋‍♂️ 总访客数 
+      <span id="busuanzi_value_site_uv" style="font-weight: bold;"></span> 人
+  </span>
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

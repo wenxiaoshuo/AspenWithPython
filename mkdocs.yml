@@ -53,7 +53,14 @@ markdown_extensions:
 
 # --- 导航栏设置 (可选，不写这块它会自动根据文件夹生成) ---
 # 只有当你想要自定义顺序时才需要写这块
-# nav:
-#   - 首页: index.md
-#   - Aspen基础: 
-#       - 界面
+# --- 导航栏设置 (手动排版) ---
+nav:
+  - 首页: index.md
+  - 学习笔记:
+      - Python联动技巧: Python与Aspen联动的一些技巧总结/Python与Aspen联动的一些技巧总结.md
+      - 遗传算法优化: 使用遗传算法与python对反应器优化.md
+      - 自动化误诊: 千粉达成！🎉+深入+Aspen+自动化：揭秘+AttributeValue+的隐藏玩法/千粉达成！🎉+深入+Aspen+自动化：揭秘+AttributeValue+的隐藏玩法.md
+      - Python+深度学习: 化工仿真_+利用+Python+++深度/化工仿真_+利用+Python+++深度学习搞定Aspen+浮阀塔板自动校核.md
+      - Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误/Aspen+Plus+Python+自动化深度解析：物性配置与+COM+接口机制勘误.md
+  - 更多资源:
+      - Aspen指南: Aspen+Guide.md
